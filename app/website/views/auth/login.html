@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% set page_title = "Log In" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5 py-lg-5">
+  <div class="row row-cols-1 row-cols-lg-2 row-gap-5">
+
+    <div class="col">
+      <h1 class="display-1 fw-bold">Log In</h1>
+      <p class="fs-5 text-secondary">Log in to your existing {{website_info.name}} account.</p>
+
+      <div class="hide-on-small-screen w-75 mx-auto">
+        <img src="{{url_for('static',filename='img/login.png')}}" width="100%">
+      </div>
+    </div>
+
+    <div class="col">
+      <form method="post" class="pattern-bg border border-1 px-3 px-md-5 py-5 rounded-4 needs-validation" novalidate>
+
+        <div class="mb-4">
+          <label for="email" class="form-label fw-medium text-secondary">Email</label>
+          <input name="email" id="email" type="email" placeholder="Enter your email address"
+            class="form-control form-control-lg" required>
+          <div class="invalid-feedback">Please enter your registered email address.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label fw-medium text-secondary">Password</label>
+          <input name="password" id="password" type="password" placeholder="Enter your password"
+            class="form-control form-control-lg" required>
+          <div class="invalid-feedback">Please enter your password.</div>
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-purple bg-gradient px-5">Log In</button>
+
+        <p class="text-muted mt-3">Don't remember your password? <a href="">Reset Password</a></p>
+        <hr />
+        <p class="text-muted">
+          Don't have an account?
+          <a class="btn btn-dark bg-gradient" href="{{url_for('auth.signup')}}">Sign Up</a>
+        </p>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

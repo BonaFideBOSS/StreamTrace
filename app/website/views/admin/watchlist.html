@@ -1,0 +1,91 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Watchlist" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/sw.card.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <div class="d-flex gap-3 justify-content-between align-items-center flex-wrap">
+    <h3 class="mb-0">Watchlist Manager</h3>
+    <a href="{{url_for('admin.add_new_watchlist')}}" class="btn btn-purple"><i class="bi bi-plus-lg me-2"></i>Add new movie/TV</a>
+  </div>
+  <hr class="mb-3" />
+
+  <form class="d-flex flex-wrap gap-2 align-items-end mb-3 border border-1 p-3 rounded-3">
+    <div>
+      <label for="search" class="form-label">Search:</label>
+      <input name="search" id="search" value="{{page_details.search if page_details.search else ''}}" type="text"
+        class="form-control" placeholder="Search here...">
+    </div>
+    <div>
+      <label for="type" class="form-label">Type:</label>
+      <select name="type" id="type" class="form-select">
+        <option value="">All</option>
+        <option {{'selected' if page_details.type=='Movie' }}>Movie</option>
+        <option {{'selected' if page_details.type=='TV' }}>TV</option>
+      </select>
+    </div>
+    <div>
+      <label for="sort" class="form-label">Sort by:</label>
+      <select name="sort" id="sort" class="form-select">
+        <option value="latest" {{'selected' if page_details.sort=='latest' }}>Latest</option>
+        <option value="oldest" {{'selected' if page_details.sort=='oldest' }}>Oldest</option>
+        <option value="rating_high" {{'selected' if page_details.sort=='rating_high' }}>Rating (high to low)</option>
+        <option value="rating_low" {{'selected' if page_details.sort=='rating_low' }}>Rating (low to high)</option>
+        <option value="title_asc" {{'selected' if page_details.sort=='title_asc' }}>A-Z</option>
+        <option value="title_desc" {{'selected' if page_details.sort=='title_desc' }}>Z-A</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-dark"><i class="bi bi-search me-2"></i>Search</button>
+  </form>
+
+  <div class="mb-3 text-center">
+    <a class="btn btn-dark {{'disabled' if page_details.page <= 1}}" href="?page={{page_details.page-1}}">
+      Previous page
+    </a>
+    <a class="btn btn-dark {{'disabled' if watchlist|length < 100}}" href="?page={{page_details.page+1}}">
+      Next page
+    </a>
+  </div>
+
+  {% if watchlist|length == 0 %}
+  <div class="alert alert-danger" role="alert">No data found!</div>
+  {% endif %}
+
+  <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 row-gap-4">
+    {% for title in watchlist %}
+    <div class="col">
+      <div class="sw-card card text-bg-dark border-0">
+        <img src="{{title.poster}}" class="card-img">
+        <div class="card-img-overlay d-none flex-column justify-content-center">
+          <a href="{{url_for('admin.manage_watchlist',title_id=title._id)}}" class="btn btn-dark stretched-link">
+            <i class="bi bi-gear me-2"></i>Manage
+          </a>
+        </div>
+      </div>
+      <div class="mt-2">
+        <h6>{{title.title}} ({{title.year}})</h6>
+        <span class="badge text-bg-dark fw-normal d-inline-flex gap-1 align-items-center">
+          <i class="bi bi-star-fill text-warning"></i>
+          <span>{{title.rating}}</span>
+        </span>
+        <span class="badge text-bg-dark fw-normal">{{title.type}}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-3 text-center">
+    <a class="btn btn-dark {{'disabled' if page_details.page <= 1}}" href="?page={{page_details.page-1}}">
+      Previous page
+    </a>
+    <a class="btn btn-dark {{'disabled' if watchlist|length < 100}}" href="?page={{page_details.page+1}}">
+      Next page
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

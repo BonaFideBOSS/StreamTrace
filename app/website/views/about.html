@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+{% set page_title = "About" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="py-5 text-center bg-light">
+  <h1 class="display-1 fw-bold my-5 py-5">About Us</h1>
+</div>
+
+<div class="container my-5">
+  <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+    <span class="display-1 text-purple-gradient">{{website_info.logo|safe}}</span>
+    <h1 class="display-4 text-purple-gradient fw-bold">Welcome to {{website_info.name}}</h1>
+    <p class="fs-5 text-secondary fw-medium">Your ultimate solution for managing and optimizing your streaming services
+      and subscriptions. With the ever-expanding world of streaming content, keeping track of what you watch and where
+      you subscribe can become overwhelming. That's where {{website_info.name}} comes in.</p>
+
+    <div class="my-5 py-5">
+      <h1 class="text-purple-gradient fw-bold">Our Mission</h1>
+      <p class="fs-5 text-secondary fw-medium">At {{website_info.name}}, our mission is to simplify your streaming
+        experience. We understand the frustration of juggling multiple subscriptions, forgetting renewal dates, and
+        losing track of your favorite shows and movies. Our platform is designed to empower you with tools that make
+        managing your streaming life effortless.</p>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 row-gap-5 text-center">
+    <div class="col">
+      <h1 class="display-1 fw-bold text-purple-gradient">{{services}}</h1>
+      <p class="fs-5 fw-medium text-secondary">Services to track</p>
+    </div>
+    <div class="col">
+      <h1 class="display-1 fw-bold text-purple-gradient">{{subs}}</h1>
+      <p class="fs-5 fw-medium text-secondary">Subscriptions tracked</p>
+    </div>
+    <div class="col">
+      <h1 class="display-1 fw-bold text-purple-gradient">{{users}}</h1>
+      <p class="fs-5 fw-medium text-secondary">Happy users</p>
+    </div>
+  </div>
+</div>
+
+<div class="py-5 bg-light">
+  <div class="container py-5 text-center text-md-start">
+    <h1 class="text-purple-gradient fw-bold">Services We Offer</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-gap-5 my-5">
+
+      <div class="col">
+        <i class="bi bi-credit-card-fill fs-1"></i>
+        <h4>Subscription Management</h4>
+        <p class="fs-5 text-secondary fw-medium">Keep tabs on all your subscriptions in one place. From Netflix and Hulu
+          to Disney+ and more, we've got you covered.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-bookmark-star-fill fs-1"></i>
+        <h4>Customized Recommendations</h4>
+        <p class="fs-5 text-secondary fw-medium">Get personalized recommendations based on your preferences and viewing
+          history. Discover new content that aligns with your interests.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-bell-fill fs-1"></i>
+        <h4>Renewal Reminders</h4>
+        <p class="fs-5 text-secondary fw-medium">Never miss a subscription renewal date again. We send you timely
+          reminders so you can stay in control of your budget and viewing experience.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-bookmark-heart-fill fs-1"></i>
+        <h4>Watchlist Organization</h4>
+        <p class="fs-5 text-secondary fw-medium">Create and manage watchlists for TV shows and movies you want to watch.
+          {{website_info.name}} ensures you never lose track of your must-see content.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-pie-chart-fill fs-1"></i>
+        <h4>Usage Analytics</h4>
+        <p class="fs-5 text-secondary fw-medium">Gain insights into your viewing habits and patterns. See where you're
+          spending the most time and make informed choices about your subscriptions.</p>
+      </div>
+    </div>
+
+    <h1 class="mt-5 pt-5 text-purple-gradient fw-bold">Key Features</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-gap-5 my-5">
+
+      <div class="col">
+        <i class="bi bi-layout-text-window-reverse fs-1"></i>
+        <h4>Centralized Dashboard</h4>
+        <p class="fs-5 text-secondary fw-medium">Access all your streaming services and information from a single
+          dashboard. No more hopping between apps.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-phone-fill fs-1"></i>
+        <h4>Cross-Platform Support</h4>
+        <p class="fs-5 text-secondary fw-medium">Whether you're streaming on your TV, laptop, tablet, or phone,
+          {{website_info.name}} works across all your devices.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-shield-lock-fill fs-1"></i>
+        <h4>Secure and Private</h4>
+        <p class="fs-5 text-secondary fw-medium">Your data's security and privacy are our top priorities. Rest assured
+          that your personal information is safe with us.</p>
+      </div>
+
+      <div class="col">
+        <i class="bi bi-person-fill-check fs-1"></i>
+        <h4>User-Friendly Interface</h4>
+        <p class="fs-5 text-secondary fw-medium">Our intuitive design ensures that even the most tech-challenged users
+          can navigate our platform with ease.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container my-5 py-5">
+  <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+    <h1 class="text-purple-gradient fw-bold">Join the {{website_info.name}} Community</h1>
+    <p class="fs-5 text-secondary fw-medium">{{website_info.name}} is here to make your streaming journey enjoyable and
+      hassle-free. Join our community of avid streamers who've embraced a new era of entertainment management. Say
+      goodbye to subscription chaos and hello to seamless streaming with {{website_info.name}}!</p>
+    <p class="mt-5 fs-5 text-secondary fw-medium">Explore our platform and start simplifying your streaming life today.
+    </p>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block page_script %}{% endblock %}

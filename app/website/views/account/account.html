@@ -1,0 +1,187 @@
+{% extends 'layout.html' %}
+{% set page_title = "Account" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/account.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container-fluid border-bottom d-block d-lg-none sticky-top bg-light bg-gradient">
+  <nav>
+    <div class="nav nav-underline nav-justified">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#account-home">General</button>
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-email">Email</button>
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-password">Password</button>
+      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-delete">Delete Account</button>
+    </div>
+  </nav>
+</div>
+
+<div class="container my-5">
+
+  <h1 class="mb-5">Account Settings</h1>
+
+  <div class="row">
+    <div class="col-3 d-none d-lg-flex">
+      <div class="nav flex-column nav-pills gap-2 fs-5 w-100">
+        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#account-home">General</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#account-email">Email</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#account-password">Password</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#account-delete">Delete Account</button>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-9">
+      <div class="tab-content border border-1 rounded-4">
+
+        <!-- General Settings -->
+        <div class="tab-pane fade show active" id="account-home">
+          <div class="pt-4 pt-md-5 px-3 px-md-5">
+            <h3><i class="bi bi-person me-2"></i>Personal Account Details</h3>
+            <p class="fs-5 text-secondary">Manage your account's personal details here</p>
+          </div>
+          <hr>
+          <form id="update-personal" class="needs-validation" novalidate>
+            <div class="px-3 px-md-5">
+              <div class="mb-4">
+                <label for="username" class="form-label fw-medium text-secondary">Username</label>
+                <input value="{{session.user.username}}" name="username" id="username" type="text"
+                  placeholder="enter a username" class="form-control form-control-lg" required autocomplete="off"
+                  minlength="5" pattern="[A-Za-z0-9]{5,}">
+                <div class="invalid-feedback">Please choose a 5+ characters long alphanumeric username.</div>
+              </div>
+
+              <div class="row row-cols-1 row-cols-md-2 mb-4 row-gap-4">
+                <div class="col">
+                  <label for="first_name" class="form-label fw-medium text-secondary">First name</label>
+                  <input value="{{session.user.first_name}}" name="first_name" id="first_name" type="text"
+                    placeholder="Your first name" class="form-control form-control-lg" autocomplete="off">
+                </div>
+
+                <div class="col">
+                  <label for="last_name" class="form-label fw-medium text-secondary">Last name</label>
+                  <input value="{{session.user.last_name}}" name="last_name" id="last_name" type="text"
+                    placeholder="Your last name" class="form-control form-control-lg" autocomplete="off">
+                </div>
+
+                <div class="col">
+                  <label for="phone" class="form-label fw-medium text-secondary">
+                    Phone number <span class="text-secondary small fw-normal">(with country code)</span>
+                  </label>
+                  <input value="{{session.user.phone}}" name="phone" id="phone" type="number"
+                    placeholder="Your phone number" class="form-control form-control-lg" autocomplete="off">
+                </div>
+
+                <div class="col">
+                  <label for="age" class="form-label fw-medium text-secondary">Age</label>
+                  <input value="{{session.user.age}}" name="age" id="age" type="number" placeholder="Your age"
+                    class="form-control form-control-lg" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="pb-3 px-3 px-md-5">
+              <button type="submit" class="btn btn-lg btn-dark px-5">Update</button>
+            </div>
+          </form>
+        </div>
+        <!-- X -- General Settings -- X -->
+
+        <!-- Email Settings -->
+        <div class="tab-pane fade" id="account-email">
+          <div class="pt-4 pt-md-5 px-3 px-md-5">
+            <h3><i class="bi bi-envelope-at me-2"></i>Email Settings</h3>
+            <p class="fs-5 text-secondary">Manage your email here</p>
+          </div>
+          <hr>
+          <form id="update-email" class="needs-validation" novalidate>
+            <div class="px-3 px-md-5">
+              <div class="mb-4">
+                <label for="email" class="form-label fw-medium text-secondary">Email address</label>
+                <input value="{{session.user.email}}" name="email" id="email" type="email"
+                  placeholder="enter your email" class="form-control form-control-lg" required autocomplete="off">
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+            </div>
+            <hr>
+            <div class="pb-3 px-3 px-md-5">
+              <button type="submit" class="btn btn-lg btn-dark px-5">Update</button>
+            </div>
+          </form>
+        </div>
+        <!-- X -- Email Settings -- X -->
+
+        <!-- Password Settings -->
+        <div class="tab-pane fade" id="account-password">
+          <div class="pt-4 pt-md-5 px-3 px-md-5">
+            <h3><i class="bi bi-lock me-2"></i>Password Settings</h3>
+            <p class="fs-5 text-secondary">Manage your password here</p>
+          </div>
+          <hr>
+          <form id="update-password" class="needs-validation" novalidate>
+            <div class="px-3 px-md-5">
+              <div class="mb-4">
+                <label for="old_password" class="form-label fw-medium text-secondary">Old password</label>
+                <input name="old_password" id="old_password" type="password" placeholder="enter your old password"
+                  class="form-control form-control-lg" required autocomplete="off">
+                <div class="invalid-feedback">Please enter your old password.</div>
+              </div>
+              <div class="mb-4">
+                <label for="new_password" class="form-label fw-medium text-secondary">New password</label>
+                <input name="new_password" id="new_password" type="password" placeholder="enter your new password"
+                  class="form-control form-control-lg" required autocomplete="off">
+                <div class="invalid-feedback">Please enter your new password.</div>
+              </div>
+            </div>
+            <hr>
+            <div class="pb-3 px-3 px-md-5">
+              <button type="submit" class="btn btn-lg btn-dark px-5">Update</button>
+            </div>
+          </form>
+        </div>
+        <!-- X -- Password Settings -- X -->
+
+        <!-- Delete Account -->
+        <div class="tab-pane fade" id="account-delete">
+          <div class="pt-4 pt-md-5 px-3 px-md-5">
+            <h3><i class="bi bi-trash me-2"></i>Delete Account</h3>
+            <p class="fs-5 text-secondary">Permanently delete your account and your data</p>
+          </div>
+          <hr>
+          <div class="pb-3 px-3 px-md-5">
+            <div class="alert alert-danger" role="alert">
+              <i class="bi bi-exclamation-triangle me-2"></i>Your will lose all your data. This action is irreversible.
+            </div>
+            <button type="button" class="btn btn-lg btn-danger px-5" data-bs-toggle="modal"
+              data-bs-target="#delete-account-modal">Delete</button>
+          </div>
+        </div>
+        <!-- X -- Delete Account -- X -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="delete-account-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow">
+      <div class="modal-body p-4 text-center">
+        <h4>Confirm deletion</h4>
+        <p class="fs-5">You're about to permanently delete your account and your data.</p>
+      </div>
+      <form action="{{url_for('account.delete_account')}}" method="post" class="modal-footer flex-nowrap p-0">
+        <button type="submit"
+          class="btn btn-lg text-danger fs-5 text-decoration-none col-6 py-3 m-0 rounded-0 border-end">
+          <strong>Yes, delete</strong></button>
+        <button type="button" class="btn btn-lg text-primary fs-5 text-decoration-none col-6 py-3 m-0 rounded-0"
+          data-bs-dismiss="modal">No, cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{url_for('static',filename='custom/js/account.settings.js')}}"></script>
+{% endblock %}

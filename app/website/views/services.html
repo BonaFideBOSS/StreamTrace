@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% set page_title = "Streaming Services" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/sw.card.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h1 class="mb-5">Streaming Services</h1>
+
+  <!-- Search Form -->
+  <form id="services-form" class="d-flex flex-md-row flex-column gap-2 align-items-center mb-5">
+    <input name="search" id="search" value="{{search if search else ''}}" type="text"
+      class="form-control form-control-lg" placeholder="Search">
+    <button type="submit" class="btn btn-lg btn-purple text-nowrap px-5"><i
+        class="bi bi-search me-2"></i>Search</button>
+  </form>
+  <!-- X -- Search Form -- X -->
+
+  {% if services|length == 0 %}
+  <div class="text-center fs-5 text-secondary fw-medium">
+    <p>😢 No streaming services found.</p>
+    <div class="alert alert-dark text-secondary" role="alert">
+      <a href="" class="text-purple">Submit Missing Subscriptions!</a>
+      Let us know which streaming services should be added to {{website_info.name}}.
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-gap-4">
+    {% for service in services %}
+    <div class="col">
+      <div class="sw-card logo-container-lg card text-bg-dark border-0">
+        <img src="data:image/*;base64,{{service.logo_wide}}" class="card-img">
+        {% if session.user %}
+        <div class="card-img-overlay d-none align-items-center justify-content-center">
+          <a href="{{url_for('account.new_sub',service_id=service._id)}}" class="btn btn-purple stretched-link">
+            <i class="bi bi-cast me-2"></i>Add Subscription
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      <div class="mt-2">
+        <h6>{{service.name}}</h6>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

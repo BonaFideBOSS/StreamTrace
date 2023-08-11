@@ -1,0 +1,13 @@
+canvas {
+  display: unset !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#user-watchlist:has(> .loader) {
+  justify-content: center;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}

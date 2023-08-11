@@ -1,0 +1,43 @@
+{% if session.user %}
+<a class="nav-link {{ 'active' if page_title == 'Watchlist' }}" href="{{url_for('account.watchlist')}}">
+  <i class="bi bi-bookmark-star"></i>
+</a>
+<div class="dropdown">
+  <button class="nav-link text-truncate" type="button" data-bs-toggle="dropdown">
+    {{session.user.username}}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <span class="dropdown-item-text fs-5 fw-medium pb-0">{{session.user.username}}</span>
+      <span class="dropdown-item-text text-secondary small pt-0">{{session.user.email}}</span>
+    </li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+    {% if "staff" in session.user.roles %}
+    <li><a class="dropdown-item" href="{{url_for('admin.dashboard')}}">Administration</a></li>
+    {% endif %}
+    <li>
+      <a class="dropdown-item {{ 'active' if page_title == 'Account' }}" href="{{url_for('account.home')}}">
+        Account
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+    <li>
+      <a class="dropdown-item {{'active' if page_title == 'Home'}}" href="{{url_for('views.home')}}" target="_blank">
+        {{website_info.name}} Homepage<i class="bi bi-box-arrow-up-right ms-2"></i>
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+    <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Log out</a></li>
+  </ul>
+</div>
+{% else %}
+<a class="btn btn-dark bg-gradient px-4 d-flex align-items-center" href="{{url_for('auth.login')}}">Log In</a>
+<a class="btn btn-purple bg-gradient px-4 fw-medium d-flex align-items-center" href="{{url_for('auth.signup')}}">Sign Up
+</a>
+{% endif %}

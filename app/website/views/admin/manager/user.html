@@ -1,0 +1,42 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Users" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3 class="mb-0">User Manager - Edit</h3>
+  <hr class="mb-3" />
+
+  <form method="post" class="d-flex flex-column gap-3">
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="email" class="form-label">Email:</label>
+      <input name="email" id="email" value="{{user.email}}" type="email" class="form-control" required>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="username" class="form-label">Username:</label>
+      <input name="username" id="username" value="{{user.username}}" type="text" class="form-control">
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="password" class="form-label">Password:</label>
+      <input name="password" id="password" value="{{user.password}}" type="text" class="form-control">
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="roles" class="form-label">Roles:</label>
+      <textarea name="roles" id="roles" rows="1" class="form-control">{{",".join(user.roles)}}</textarea>
+      <span class="small text-secondary">Split by comma</span>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <button type="submit" class="btn btn-success">Save changes</button>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

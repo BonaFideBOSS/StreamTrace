@@ -1,0 +1,92 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Services" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3 class="mb-0">Service Manager - Edit</h3>
+  <hr class="mb-3" />
+
+  <form method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="name" class="form-label">Name:</label>
+      <input name="name" id="name" value="{{service.name}}" type="text" class="form-control" required>
+    </div>
+
+    <div class="d-flex flex-wrap gap-3">
+      <div class="border border-1 rounded-3 p-3 d-flex flex-column justify-content-between">
+        <div>
+          <label for="icon" class="form-label">Icon:</label>
+          <hr class="my-0 mb-2">
+        </div>
+        <div class="logo-container"><img src="data:image/*;base64,{{ service.logo }}"></div>
+        <div>
+          <hr class="my-2">
+          <button type="button" id="edit-logo" class="btn btn-dark w-100">Edit</button>
+        </div>
+      </div>
+      <div class="border border-1 rounded-3 p-3 d-flex flex-column justify-content-between">
+        <div>
+          <label for="logo_wide" class="form-label">Logo (wide):</label>
+          <hr class="my-0 mb-2">
+        </div>
+        <div class="logo-container-lg"><img src="data:image/*;base64,{{ service.logo_wide }}"></div>
+        <div>
+          <hr class="my-2">
+          <button type="button" id="edit-logo-wide" class="btn btn-dark w-100">Edit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-3">
+      <div id="change-logo" class="visually-hidden">
+        <label for="logo" class="form-label">Logo:</label>
+        <input name="logo" id="logo" type="file" accept="image/*" class="form-control" required disabled>
+        <span class="small text-secondary">Transparent background (square icon)</span>
+        <div id="logo-preview" class="logo-container"></div>
+      </div>
+      <div id="change-logo-wide" class="visually-hidden">
+        <label for="logo_wide" class="form-label">Logo (wide):</label>
+        <input name="logo_wide" id="logo_wide" type="file" accept="image/*" class="form-control" required disabled>
+        <span class="small text-secondary">With background</span>
+        <div id="logo-wide-preview" class="logo-container-lg"></div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <button type="submit" class="btn btn-success">Save changes</button>
+    </div>
+
+  </form>
+  <hr class="mb-3" />
+  <form action="{{url_for('admin.delete_item',collection='Services',id=service._id)}}">
+    <button type="submit" class="btn btn-danger">Delete item</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script>
+  $('#edit-logo').on('click', function () {
+    $('#change-logo')
+      .find('input').attr('disabled', false).end()
+      .removeClass('visually-hidden').end()
+  })
+
+  $('#edit-logo-wide').on('click', function () {
+    $('#change-logo-wide')
+      .find('input').attr('disabled', false).end()
+      .removeClass('visually-hidden').end()
+  })
+
+  $('input[name="logo"]').on('change', function () {
+    previewFile(this, 'logo-preview')
+  })
+
+  $('input[name="logo_wide"]').on('change', function () {
+    previewFile(this, 'logo-wide-preview')
+  })
+</script>
+{% endblock %}

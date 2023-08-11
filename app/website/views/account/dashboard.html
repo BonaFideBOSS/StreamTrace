@@ -1,0 +1,163 @@
+{% extends 'layout.html' %}
+{% set page_title = "Dashboard" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='external/datatables/datatables.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/account.dashboard.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h2 class="mb-5 text-purple-gradient text-truncate fw-bold">
+    Welcome,
+    {% if session.user.first_name and session.user.last_name %}
+    <span>{{session.user.first_name}} {{session.user.last_name}}</span>!
+    {% else %}
+    <span>{{session.user.username}}</span>!
+    {% endif %}
+  </h2>
+
+  <div class="d-flex gap-3 justify-content-between align-items-center flex-wrap">
+    <h3 class="mb-0">My Subscriptions</h3>
+    {% if sub_count != 0 %}
+    <a href="{{url_for('views.services')}}" class="btn btn-purple">
+      <i class="bi bi-plus-lg me-2"></i>Add new subscription
+    </a>
+    {% endif %}
+  </div>
+  <hr>
+  {% if sub_count == 0 %}
+  <div class="text-center my-5">
+    <p class="fs-5">You do not have any active subscriptions currently.</p>
+    <a href="{{url_for('views.services')}}" class="btn btn-lg btn-purple bg-gradient">Add new service</a>
+  </div>
+  {% else %}
+
+  <!-- My Subscriptions Table -->
+  <div class="custom-filter mb-3 d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div class="d-flex flex-wrap gap-3">
+      <div>
+        <label class="form-label text-secondary fw-medium">Entries:</label>
+        <select id="entries" class="form-select" disabled>
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+          <option>100</option>
+          <option value="-1">All</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label text-secondary fw-medium">Streaming Service:</label>
+        <select id="stream-filter" class="form-select" disabled>
+          <option value="">All</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label text-secondary fw-medium">Status:</label>
+        <select id="status-filter" class="form-select" disabled>
+          <option value="">All</option>
+          <option value="success">Active</option>
+          <option value="danger">Inactive</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label text-secondary fw-medium">Search:</label>
+        <input id="tablesearch" type="text" class="form-control" placeholder="Search..." disabled>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table id="user-subs" class="text-center table align-middle table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Streaming Service</th>
+          <th class="text-center">Account</th>
+          <th class="text-center">Amount</th>
+          <th class="text-center">Expiry</th>
+          <th class="text-center" data-type="@data-value">Status</th>
+          <th class="text-center">Manage</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2">Total</th>
+          <th id="total-amount" class="text-center"></th>
+          <th colspan="3"></th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div
+    class="dataTables_wrapper d-flex flex-column flex-lg-row align-items-center justify-content-lg-between row-gap-3 mt-3">
+    <div id="table-summary"></div>
+    <div id="table-pagination"></div>
+  </div>
+  <!--  X -- My Subscriptions Table -- X -->
+  {% endif %}
+</div>
+
+{% if sub_count != 0 %}
+<div class="container my-5 pt-5">
+  <h3 class="mb-0">Statistics</h3>
+  <hr>
+  <div class="row row-gap-4 align-items-center">
+    <div class="col-lg-4 col-md-6 col-12 mx-auto"><canvas id="sum-of-amount-by-services"></canvas></div>
+    <div class="col-md-6 col-12 mx-auto"><canvas id="monthly-breakdown"></canvas></div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container my-5">
+  <div class="d-flex gap-2 justify-content-between align-items-end flex-wrap">
+    <h3 class="mb-0">My Watchlist</h3>
+    <span class="badge text-bg-dark fw-normal me-auto">{{wlist_count}} items</span>
+    {% if wlist_count != 0 %}
+    <div>
+      <a href="{{url_for('account.watchlist')}}" class="btn btn-dark">
+        <i class="bi bi-pencil me-2"></i>Edit
+      </a>
+      <a href="{{url_for('views.browse')}}" class="btn btn-purple">
+        <i class="bi bi-plus-lg me-2"></i>Add new Movie/TV
+      </a>
+    </div>
+    {% endif %}
+  </div>
+  <hr>
+
+  {% if wlist_count == 0 %}
+  <div class="text-center my-5">
+    <h3><i class="bi bi-bookmark-star-fill"></i></h3>
+    <p class="fs-5">Your Watchlist is empty</p>
+    <p class="text-secondary">Add movies and shows to your Watchlist to keep track of what you want to watch.</p>
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <a href="{{url_for('views.browse')}}?type=Movie" class="btn btn-purple bg-gradient"><i
+          class="bi bi-film me-2"></i>Browse latest movies</a>
+      <a href="{{url_for('views.browse')}}?type=TV" class="btn btn-purple bg-gradient"><i
+          class="bi bi-tv me-2"></i>Browse latest shows</a>
+    </div>
+  </div>
+  {% else %}
+
+  <!-- Watchlist -->
+  <div id="user-watchlist" class="row row-cols-2 row-cols-md-4 row-cols-lg-6 row-gap-4" data-count="{{wlist_count}}">
+    <div class="loader text-center my-5">
+      <div class="spinner-border text-purple" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <!-- X -- Watchlist -- X -->
+
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{url_for('static',filename='external/datatables/datatables.js')}}"></script>
+<script src="{{url_for('static',filename='external/chartjs/chart.js')}}"></script>
+<script src="{{url_for('static',filename='custom/js/account.dashboard.js')}}"></script>
+<script src="{{url_for('static',filename='custom/js/chart-maker.js')}}"></script>
+{% endblock %}

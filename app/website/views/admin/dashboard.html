@@ -1,0 +1,47 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Dashboard" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3 class="mb-5">Welcome, {{session.user.username}}!</h3>
+
+  <div class="row row-cols-2 row-cols-md-4 g-3">
+
+    <div class="col">
+      <div class="card card-body">
+        <h5 class="text-secondary">Services</h5>
+        <h1>{{services}}</h1>
+        <a class="text-purple" href="{{url_for('admin.service_manager')}}">Manage services</a>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-body">
+        <h5 class="text-secondary">Watchlist</h5>
+        <h1>{{watchlist}}</h1>
+        <a class="text-purple" href="{{url_for('admin.watchlist_manager')}}">Manage watchlist</a>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-body">
+        <h5 class="text-secondary">Users</h5>
+        <h1>{{users}}</h1>
+        <a class="text-purple" href="{{url_for('admin.user_manager')}}">Manage users</a>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-body h-100">
+        <h5 class="text-secondary">Subscriptions</h5>
+        <h1>{{subs}}</h1>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

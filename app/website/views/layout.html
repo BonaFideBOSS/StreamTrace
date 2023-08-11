@@ -1,0 +1,175 @@
+{% extends 'shared.html' %}
+
+{% block main_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/layout.css')}}">
+
+{% block page_style %}{% endblock %}
+{% endblock %}
+
+{% block main_body %}
+
+<!-- Navigation Menu -->
+<nav class="navbar navbar-expand-lg border-bottom pattern-bg">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fs-2 me-0 text-purple-gradient"
+      href="{{url_for('account.dashboard') if session.user else url_for('views.home')}}">
+      <span class="me-2">{{website_info.logo|safe}}</span><strong>{{website_info.name}}</strong>
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <div class="navbar-nav fs-5 ms-3">
+        {% if session.user %}
+        <a class="nav-link {{ 'active' if page_title == 'Dashboard' }}"
+          href="{{url_for('account.dashboard')}}">Dashboard</a>
+        {% else %}
+        <a class="nav-link {{ 'active' if page_title == 'Home' }}" href="{{url_for('views.home')}}">Home</a>
+        {% endif %}
+        <a class="nav-link {{ 'active' if page_title == 'Streaming Services' }}"
+          href="{{url_for('views.services')}}">Streaming Services</a>
+          <a class="nav-link {{ 'active' if page_title == 'Browse' }}"
+          href="{{url_for('views.browse')}}">Browse</a>
+        <a class="nav-link {{ 'active' if page_title == 'About' }}" href="{{url_for('views.about')}}">About</a>
+        <a class="nav-link {{ 'active' if page_title == 'Contact' }}" href="{{url_for('views.contact')}}">Contact</a>
+      </div>
+
+
+      <div class="ms-auto nav nav-pills gap-1 align-items-center {{'fs-5' if session.user}}">
+        {% include 'components/theme-changer.html' %}
+        {% include 'components/navbar-auth.html' %}
+      </div>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#side-navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<!-- X -- Navigation Menu -- X -->
+
+<!-- Navigation Menu - Sidebar -->
+<div class="offcanvas offcanvas-start pattern-bg" tabindex="-1" id="side-navbar">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title d-flex align-items-center gap-3">
+      {% include 'components/theme-changer.html' %}
+      <span class="text-purple-gradient"><strong>{{website_info.name}}</strong></span>
+    </h3>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+
+    {% if session.user %}
+    <div class="ms-2">
+      <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
+      <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+    </div>
+    <hr class="mb-2">
+    {% endif %}
+
+    <nav class="nav nav-pills flex-column fs-3 gap-2 mb-3">
+      {% if session.user %}
+      {% if "staff" in session.user.roles %}
+      <a class="nav-link" href="{{url_for('admin.dashboard')}}">Administration</a>
+      {% endif %}
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Dashboard' }}"
+        href="{{url_for('account.dashboard')}}">Dashoard</a>
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Watchlist' }}"
+        href="{{url_for('account.watchlist')}}">Watchlist</a>
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Account' }}"
+        href="{{url_for('account.home')}}">Account</a>
+      <hr class="my-0">
+      <a class="nav-link text-truncate" href="{{url_for('views.home')}}" target="_blank" style="max-width: 100%;">
+        {{website_info.name}} Homepage<i class="bi bi-box-arrow-up-right ms-2"></i>
+      </a>
+      {% else %}
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Home' }}" href="{{url_for('views.home')}}">Home</a>
+      {% endif %}
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Streaming Services' }}"
+        href="{{url_for('views.services')}}">Streaming Services</a>
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Browse' }}"
+        href="{{url_for('views.browse')}}">Browse</a>
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'About' }}"
+        href="{{url_for('views.about')}}">About</a>
+      <a class="nav-link {{ 'active bg-gradient' if page_title == 'Contact' }}"
+        href="{{url_for('views.contact')}}">Contact</a>
+      {% if session.user %}
+      <hr class="my-0">
+      <a class="nav-link" href="{{url_for('auth.logout')}}">Log Out</a>
+      {% endif %}
+    </nav>
+
+    {% if not session.user %}
+    <hr class="mt-auto" />
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-lg btn-dark bg-gradient flex-fill" href="{{url_for('auth.login')}}">Log In</a>
+      <a class="btn btn-lg btn-purple bg-gradient fw-medium flex-fill" href="{{url_for('auth.signup')}}">Sign Up</a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+<!-- X -- Navigation Menu - Sidebar -- X -->
+
+<main>{% block page_body %}{% endblock %}</main>
+
+<footer class="mt-5 border-top pattern-bg">
+  <div class="container py-5 d-flex flex-column gap-5 text-center text-lg-start">
+
+    <div class="fs-3 text-purple-gradient">
+      <span class="me-2">{{website_info.logo|safe}}</span><strong>{{website_info.name}}</strong>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-2 row-gap-5">
+
+      <div class="col">
+        <p class="fs-5 fw-bold">Pages</p>
+        <ul class="nav flex-column gap-2">
+          <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item"><a href="{{url_for('views.about')}}" class="nav-link p-0 text-muted">About</a></li>
+          <li class="nav-item"><a href="{{url_for('views.contact')}}" class="nav-link p-0 text-muted">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <p class="fs-4 mb-0 fw-bold">Subscribe to our newsletter</p>
+        <p class="text-secondary">Sign up for our newsletter to get latest updates on streaming services.</p>
+        <form action="{{url_for('views.subscribe')}}" class="d-flex flex-column flex-sm-row needs-validation"
+          novalidate>
+          <div class="position-relative w-100 mb-3 mb-sm-0 me-sm-3">
+            <input class="form-control form-control-lg ps-5" type="email" name="email" placeholder="Your email"
+              required>
+            <i class="bi bi-envelope fs-5 text-muted position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+          </div>
+          <button class="btn btn-purple bg-gradient shadow-lg btn-lg" type="submit" name="subscribe">Subscribe</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start align-items-center">
+      <a href="//facebook.com" target="_blank" class="btn btn-lg btn-dark"><i class="bi bi-facebook"></i></a>
+      <a href="//instagram.com" target="_blank" class="btn btn-lg btn-dark"><i class="bi bi-instagram"></i></a>
+      <a href="//twitter.com" target="_blank" class="btn btn-lg btn-dark">𝕏</a>
+      <a href="//linkedin.com" target="_blank" class="btn btn-lg btn-dark"><i class="bi bi-linkedin"></i></a>
+    </div>
+
+    <div class="text-muted d-flex gap-3 flex-column flex-lg-row justify-content-md-between text-center pt-4 border-top">
+      <div>
+        <a class="text-muted text-decoration-none" href="{{url_for('views.terms')}}">Terms of Service</a>
+        <span class="px-1">|</span>
+        <a class="text-muted text-decoration-none" href="{{url_for('views.privacy')}}">Privacy Policy</a>
+      </div>
+      <div class="d-flex flex-column flex-md-row gap-1 align-items-center justify-content-center">
+        <span>&copy; <span class="current-year">2023</span> {{website_info.name}}, Inc. All rights reserved.</span>
+        <strong>Made by <span class="text-purple-gradient">Hacktivists</span></strong>
+      </div>
+    </div>
+
+  </div>
+</footer>
+{% endblock %}
+
+{% block main_script %}
+
+{% block page_script %}{% endblock %}
+{% endblock %}

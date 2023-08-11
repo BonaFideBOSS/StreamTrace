@@ -1,0 +1,30 @@
+.nav-underline {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.nav-underline::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-underline .nav-link {
+  color: var(--bs-secondary);
+}
+
+.nav-underline .nav-link.active {
+  font-weight: 500 !important;
+}
+
+.nav-pills .nav-link {
+  text-align: start;
+}
+
+.sticky-top.bg-light {
+  background-color: rgba(var(--bs-light-rgb), .9) !important;
+}
+
+[data-bs-theme="dark"] .sticky-top.bg-light {
+  background-color: rgba(var(--bs-dark-rgb), .9) !important;
+}

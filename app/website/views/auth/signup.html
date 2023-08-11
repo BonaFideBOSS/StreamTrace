@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% set page_title = "Sign Up" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5 py-lg-5">
+  <div class="row row-cols-1 row-cols-lg-2 row-gap-5">
+
+    <div class="col">
+      <h1 class="display-1 fw-bold">Sign Up</h1>
+      <p class="fs-5 text-secondary">Create a new {{website_info.name}} account.</p>
+
+      <div class="hide-on-small-screen w-75 mx-auto">
+        <img src="{{url_for('static',filename='img/signup.png')}}" width="100%">
+      </div>
+    </div>
+
+    <div class="col">
+      <form method="post" class="pattern-bg border border-1 px-3 px-md-5 py-5 rounded-4 needs-validation" novalidate>
+
+        <div class="mb-4">
+          <label for="email" class="form-label fw-medium text-secondary">Email</label>
+          <input name="email" id="email" type="email" placeholder="Enter your email address"
+            class="form-control form-control-lg" required autocomplete="off">
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="username" class="form-label fw-medium text-secondary">Username</label>
+          <input name="username" id="username" type="text" placeholder="Create a username"
+            class="form-control form-control-lg" required autocomplete="off" minlength="5" pattern="[A-Za-z0-9]{5,}">
+          <div class="invalid-feedback">Please choose a 5+ characters long alphanumeric username.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label fw-medium text-secondary">Password</label>
+          <input name="password" id="password" type="password" placeholder="Create a password"
+            class="form-control form-control-lg" required autocomplete="off" minlength="6">
+          <div class="invalid-feedback">Please choose a 6+ characters long password.</div>
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-purple bg-gradient px-5">Sign Up</button>
+
+        <p class="small text-secondary mb-0 mt-4 text-center">By submitting this form, I confirm that I have read and
+          understood the
+          <a href="{{url_for('views.terms')}}">Terms of Service</a> and
+          <a href="{{url_for('views.privacy')}}">Privacy Statement</a>.
+        </p>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

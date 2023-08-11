@@ -1,0 +1,40 @@
+body {
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: 0fr;
+  grid-template-areas:
+    "Header Header"
+    "Sidebar Body";
+}
+
+.navbar {
+  grid-area: Header;
+}
+
+.sidebar {
+  grid-area: Sidebar;
+  width: 300px;
+  overflow-y: auto;
+  transition: width .3s ease;
+}
+
+main {
+  grid-area: Body;
+  overflow-y: auto;
+}
+
+@media (max-width: 991.99px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.sidebar.collapsed .link-title {
+  display: none;
+}
+
+.sidebar.collapsed {
+  width: max-content;
+}

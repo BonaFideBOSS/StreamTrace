@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% set page_title = "New Subscription" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3>Add New Subscription</h3>
+  <hr>
+  <div class="border border-1 rounded-4 py-4 pt-md-5">
+    <div class="row px-3 px-md-5 align-items-center row-gap-3">
+      <div class="col-12 col-md-2 order-1 order-md-2 d-lg-flex justify-content-end">
+        <div class="logo-container-sm"><img src="data:image/*;base64,{{service.logo}}"></div>
+      </div>
+      <div class="col-12 col-md-10 order-2 order-md-1">
+        <h5 class="my-0"><span class="text-secondary">Streaming Service Provider:</span> {{service.name}}</h5>
+      </div>
+    </div>
+    <hr>
+
+    <form method="post" class="needs-validation" novalidate>
+      <div class="mb-3 px-3 px-md-5">
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="name" class="form-label fw-medium text-secondary">Account Name</label>
+          <input name="name" id="name" placeholder="Your account name" type="text"
+            class="form-control form-control-lg" autocomplete="off" required>
+          <div class="invalid-feedback">Please enter your {{service.name}} account name.</div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="amount" class="form-label fw-medium text-secondary">Amount</label>
+          <input name="amount" id="amount" placeholder="Subscription amount" type="number" step="0.01"
+            class="form-control form-control-lg" autocomplete="off" required>
+          <div class="invalid-feedback">Please enter a valid {{service.name}} subscription amount.</div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="expiry" class="form-label fw-medium text-secondary">Expiry Date</label>
+          <input name="expiry" id="expiry" placeholder="Expiry date" type="date" class="form-control form-control-lg"
+            autocomplete="off" required>
+          <div class="invalid-feedback">Please enter your {{service.name}} subscription's expiry date.</div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="px-3 px-md-5">
+        <button type="submit" class="btn btn-lg btn-purple">Add new subscription</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

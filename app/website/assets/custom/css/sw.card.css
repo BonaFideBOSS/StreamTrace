@@ -1,0 +1,12 @@
+.sw-card {
+  overflow: hidden;
+}
+
+.sw-card:has(> .card-img-overlay):hover img {
+  filter: blur(1px);
+}
+
+.sw-card:hover .card-img-overlay {
+  display: flex !important;
+  background-color: rgba(0, 0, 0, .5);
+}

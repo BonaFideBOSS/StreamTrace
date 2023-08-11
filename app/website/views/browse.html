@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% set page_title = "Browse" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/sw.card.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h1 class="mb-5">
+    {% if page_details.type == "Movie" %}
+    Browse Movies
+    {% elif page_details.type == "TV" %}
+    Browse TV Shows
+    {% else %}
+    Browse Movies & TV Shows
+    {% endif %}
+  </h1>
+
+  <!-- Filter Form -->
+  <form class="d-flex flex-wrap gap-2 align-items-end mb-5">
+    <div class="flex-fill">
+      <label for="search" class="form-label text-secondary fw-medium">Search:</label>
+      <input name="search" id="search" value="{{page_details.search if page_details.search else ''}}" type="text"
+        class="form-control form-control-lg" placeholder="Search here...">
+    </div>
+    <div>
+      <label for="type" class="form-label text-secondary fw-medium">Type:</label>
+      <select name="type" id="type" class="form-select form-select-lg">
+        <option value="">All</option>
+        <option {{'selected' if page_details.type=='Movie' }}>Movie</option>
+        <option {{'selected' if page_details.type=='TV' }}>TV</option>
+      </select>
+    </div>
+    <div>
+      <label for="sort" class="form-label text-secondary fw-medium">Sort by:</label>
+      <select name="sort" id="sort" class="form-select form-select-lg">
+        <option value="latest" {{'selected' if page_details.sort=='latest' }}>Latest</option>
+        <option value="oldest" {{'selected' if page_details.sort=='oldest' }}>Oldest</option>
+        <option value="rating_high" {{'selected' if page_details.sort=='rating_high' }}>Rating (high to low)</option>
+        <option value="rating_low" {{'selected' if page_details.sort=='rating_low' }}>Rating (low to high)</option>
+        <option value="title_asc" {{'selected' if page_details.sort=='title_asc' }}>A-Z</option>
+        <option value="title_desc" {{'selected' if page_details.sort=='title_desc' }}>Z-A</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-lg btn-purple"><i class="bi bi-search me-2"></i>Search</button>
+  </form>
+  <!-- X -- Filter Form -- X -->
+
+  <!-- Pagination Top -->
+  <div class="mb-3 text-center">
+    <a class="btn btn-dark {{'disabled' if page_details.page <= 1}}" href="?page={{page_details.page-1}}">
+      Previous page
+    </a>
+    <a class="btn btn-dark {{'disabled' if watchlist|length < 100}}" href="?page={{page_details.page+1}}">
+      Next page
+    </a>
+  </div>
+  <!-- X -- Pagination Top -- X -->
+
+  <!-- Watchlist -->
+  <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 row-gap-4">
+    {% for title in watchlist %}
+    <div class="col">
+      <div class="sw-card card text-bg-dark border-0">
+        <img src="{{title.poster}}" class="card-img">
+        {% if session.user %}
+        <div class="card-img-overlay d-none align-items-center justify-content-center">
+          <button data-id="{{title._id}}" class="watchlist-btn add-to-watchlist btn btn-purple stretched-link fs-1">
+            <i class="bi bi-bookmark-star"></i>
+          </button>
+        </div>
+        {% endif %}
+      </div>
+      <div class="mt-2">
+        <h6>{{title.title}} ({{title.year}})</h6>
+        <span class="badge text-bg-dark fw-normal d-inline-flex gap-1 align-items-center">
+          <i class="bi bi-star-fill text-warning"></i>
+          <span>{{title.rating}}</span>
+        </span>
+        <span class="badge text-bg-dark fw-normal">{{title.type}}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- X -- Watchlist -- X -->
+
+  <!-- Pagination Bottom -->
+  <div class="mb-3 text-center">
+    <a class="btn btn-dark {{'disabled' if page_details.page <= 1}}" href="?page={{page_details.page-1}}">
+      Previous page
+    </a>
+    <a class="btn btn-dark {{'disabled' if watchlist|length < 100}}" href="?page={{page_details.page+1}}">
+      Next page
+    </a>
+  </div>
+  <!-- X -- Pagination Bottom -- X -->
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{url_for('static',filename='custom/js/watchlist.manager.js')}}"></script>
+{% endblock %}

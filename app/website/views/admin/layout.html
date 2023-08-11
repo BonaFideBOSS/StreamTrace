@@ -1,0 +1,88 @@
+{% extends 'shared.html' %}
+
+{% block main_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/admin.layout.css')}}">
+
+{% block page_style %}{% endblock %}
+{% endblock %}
+
+{% block main_body %}
+
+<!-- Navigation Menu -->
+<nav class="navbar navbar-expand-lg border-bottom pattern-bg">
+  <div class="container-fluid">
+
+    <a class="navbar-brand me-0" href="{{url_for('admin.dashboard')}}">
+      <span class="fs-2 text-purple-gradient">
+        <span class="me-2">{{website_info.logo|safe}}</span><strong>{{website_info.name}}</strong>
+      </span>
+      <span>Administration</span>
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <div class="ms-auto nav nav-pills gap-1 align-items-center fs-5">
+        {% include 'components/theme-changer.html' %}
+        {% include 'components/navbar-auth.html' %}
+      </div>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#side-navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<!-- X -- Navigation Menu -- X -->
+
+<!-- Navigation Menu - Sidebar -->
+<div class="offcanvas offcanvas-start pattern-bg" tabindex="-1" id="side-navbar">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title d-flex align-items-center gap-3">
+      {% include 'components/theme-changer.html' %}
+      <span>
+        <strong class="text-purple-gradient">{{website_info.name}}</strong>
+        <span class="fs-6">Administration</span>
+      </span>
+    </h3>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+
+    <div class="ms-2">
+      <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
+      <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+    </div>
+    <hr class="mb-2">
+
+    <nav class="nav nav-pills flex-column fs-3 gap-2">
+      {% include 'admin/admin-sidebar.html' %}
+      <hr class="my-0">
+      <a class="nav-link text-truncate" href="{{url_for('views.home')}}" target="_blank" style="max-width: 100%;">
+        {{website_info.name}} Homepage<i class="bi bi-box-arrow-up-right ms-2"></i>
+      </a>
+      <hr class="my-0">
+      <a class="nav-link" href="{{url_for('account.home')}}">Account</a>
+      <a class="nav-link" href="{{url_for('auth.logout')}}">Log Out</a>
+    </nav>
+
+  </div>
+</div>
+<!-- X -- Navigation Menu - Sidebar -- X -->
+
+<div class="sidebar collapsed border-end h-100 p-3">
+  <nav class="nav nav-pills flex-column fs-5 gap-2">
+    <a id="sidebar-toggle" class="nav-link" role="button">
+      <i class="bi bi-list"></i><span class="ms-2 link-title">Collapse</span>
+    </a>
+    <hr class="my-0">
+    {% include 'admin/admin-sidebar.html' %}
+  </nav>
+</div>
+
+<main>{% block page_body %}{% endblock %}</main>
+{% endblock %}
+
+{% block main_script %}
+<script src="{{url_for('static',filename='custom/js/admin.js')}}"></script>
+
+{% block page_script %}{% endblock %}
+{% endblock %}

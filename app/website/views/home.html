@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+{% set page_title = "Home" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/home.css')}}">
+<style>
+  .header-bg-img {
+    background: url("{{url_for('static',filename='img/streamers.png')}}") no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
+{% endblock %}
+
+{% block page_body %}
+<div class="header-banner">
+  <div class="header-bg-img"></div>
+  <div class="header-bg-overlay"></div>
+  <div class="container h-100 py-5 d-flex flex-column justify-content-center align-items-center text-center">
+    <h1 class="display-5 fw-bold">Track all your streaming services and subscriptions from one place</h1>
+    <p class="fs-5">Get insights in your fixed costs. Manage your subscriptions and get notified when a bill is due.</p>
+    {% if not session.user %}
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <a class="btn btn-lg btn-purple px-5 fw-medium fs-3" href="{{url_for('auth.signup')}}">Sign Up</a>
+      <a class="btn btn-lg btn-light px-5 fs-3" href="{{url_for('auth.login')}}">Log In</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container my-5 py-5">
+  <div id="tracking-steps" class="text-center mb-5">
+    <div class="row row-cols-1 row-cols-lg-2 row-gap-2 align-items-center mb-5">
+      <div class="col text-lg-start">
+        <i class="bi bi-1-circle-fill fs-1 text-purple-gradient"></i>
+        <h1 class="fw-bold">Add a streaming service</h1>
+        <p class="fs-5 text-secondary fw-medium">Keep tabs on all your subscriptions in one place. From Netflix and Hulu
+          to Disney+ and more, we've got you covered.</p>
+      </div>
+      <div class="col text-lg-end">
+        <img src="{{url_for('static',filename='img/add_service.png')}}" width="100%">
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-2 row-gap-2 align-items-center mb-5">
+      <div class="col text-lg-start order-2 order-lg-1">
+        <img src="{{url_for('static',filename='img/analyze.png')}}" width="100%">
+      </div>
+      <div class="col text-lg-end order-1 order-lg-2">
+        <i class="bi bi-2-circle-fill fs-1 text-purple-gradient"></i>
+        <h1 class="fw-bold">Analyze your expenses</h1>
+        <p class="fs-5 text-secondary fw-medium">Gain insights into your viewing habits and patterns. See where you're
+          spending the most time and make informed choices about your subscriptions.</p>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-2 row-gap-2 align-items-center mb-5">
+      <div class="col text-lg-start">
+        <i class="bi bi-3-circle-fill fs-1 text-purple-gradient"></i>
+        <h1 class="fw-bold">Get reminders</h1>
+        <p class="fs-5 text-secondary fw-medium">Never miss a subscription renewal date again. We send you timely
+          reminders so you can stay in control of your budget and viewing experience.</p>
+      </div>
+      <div class="col text-lg-end">
+        <img src="{{url_for('static',filename='img/reminder.png')}}" width="100%">
+      </div>
+    </div>
+  </div>
+
+  <div id="services-list" class="text-center py-5 my-5">
+    <h1 class="fw-1 fw-bold mb-5">Track {{services_count}}+ Streaming Services</h1>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 justify-content-center position-relative">
+      <div class="gradient-overlay"></div>
+      {% for service in services %}
+      <div class="col">
+        <div class="logo-container-lg rounded-3"><img src="data:image/*;base64,{{service.logo_wide}}"></div>
+      </div>
+      {% endfor %}
+    </div>
+    <a href="{{url_for('views.services')}}" class="btn btn-lg btn-purple bg-gradient shadow-lg fs-2">See More</a>
+  </div>
+
+  <div class="row row-cols-1 row-cols-lg-2 row-gap-5 pt-lg-5 my-5 align-items-center text-center text-lg-start">
+    <div class="col order-2 order-lg-1">
+      <h1 class="fs-1 fw-bold">Track from anywhere</h1>
+      <p class="fs-5 text-secondary fw-medium">Download our app and track your streaming services, subscriptions, and
+        your watchlist from your
+        anywhere you go.</p>
+      <div class="row row-cols-1 row-cols-md-2 row-gap-3 px-md-5 mx-5 px-lg-0 mx-lg-0 pe-lg-5 me-lg-5">
+        <img class="col" src="{{url_for('static',filename='img/play_store_badge.png')}}" width="100%">
+        <img class="col" src="{{url_for('static',filename='img/app_store_badge.png')}}" width="100%">
+      </div>
+    </div>
+
+    <div class="col order-1 order-lg-2">
+      <img src="{{url_for('static',filename='img/cross_platform.png')}}" width="100%">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

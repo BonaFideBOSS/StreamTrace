@@ -1,0 +1,6 @@
+venv
+.gitignore
+Report.docx
+Report.pdf
+start_app.bat
+StreamTrace_Web_Application_Development_SRS.pdf

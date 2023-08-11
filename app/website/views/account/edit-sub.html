@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% set page_title = "Manage Subscription" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3>Manage Subscription</h3>
+  <hr>
+  <div class="border border-1 rounded-4 py-4 pt-md-5">
+    <div class="row px-3 px-md-5 align-items-center row-gap-3">
+      <div class="col-12 col-md-2 order-1 order-md-2 d-lg-flex justify-content-end">
+        <div class="logo-container-sm"><img src="data:image/*;base64,{{sub.service[0].logo}}"></div>
+      </div>
+      <div class="col-12 col-md-10 order-2 order-md-1">
+        <h5 class="my-0"><span class="text-secondary">Streaming Service Provider:</span> {{sub.service[0].name}}</h5>
+      </div>
+    </div>
+    <hr>
+
+    <form method="post" class="needs-validation" novalidate>
+      <div class="mb-3 px-3 px-md-5">
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="name" class="form-label fw-medium text-secondary">Account Name</label>
+          <input name="name" id="name" value="{{sub.name}}" placeholder="Your account name" type="text"
+            class="form-control form-control-lg" autocomplete="off" required readonly disabled>
+          <div class="invalid-feedback">Please enter your {{sub.service[0].name}} account name.</div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="amount" class="form-label fw-medium text-secondary">Amount</label>
+          <input name="amount" id="amount" value="{{sub.amount}}" placeholder="Subscription amount" type="number"
+            step="0.01" class="form-control form-control-lg" autocomplete="off" required>
+          <div class="invalid-feedback">Please enter a valid {{sub.service[0].name}} subscription amount.</div>
+        </div>
+
+        <div class="col-12 col-md-8 col-lg-6 mb-4">
+          <label for="expiry" class="form-label fw-medium text-secondary">Expiry Date</label>
+          <input name="expiry" id="expiry" value="{{sub.expiry.strftime('%Y-%m-%d')}}" placeholder="Expiry date"
+            type="date" class="form-control form-control-lg" autocomplete="off" required>
+          <div class="invalid-feedback">Please enter your {{sub.service[0].name}} subscription's expiry date.</div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="px-3 px-md-5">
+        <button type="submit" class="btn btn-lg btn-dark">Save changes</button>
+        <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal"
+          data-bs-target="#delete-sub-modal">Delete subscription</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="modal fade" id="delete-sub-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-3 shadow">
+      <div class="modal-body p-4 text-center">
+        <h4>Confirm deletion</h4>
+        <p class="fs-5">You're about to permanently remove this subscription from your account.</p>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <button id="delete-sub" data-sub-id="{{sub._id}}" type="button"
+          class="btn btn-lg text-danger fs-5 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Yes,
+            delete</strong></button>
+        <button type="button" class="btn btn-lg text-primary fs-5 text-decoration-none col-6 py-3 m-0 rounded-0"
+          data-bs-dismiss="modal">No, cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{url_for('static',filename='custom/js/account.delete.js')}}"></script>
+{% endblock %}

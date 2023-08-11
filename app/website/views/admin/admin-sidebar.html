@@ -1,0 +1,12 @@
+<a class="nav-link {{ 'active bg-gradient' if page_title == 'Dashboard' }}" href="{{url_for('admin.dashboard')}}">
+  <i class="bi bi-house"></i><span class="ms-2 link-title">Dashboard</span>
+</a>
+<a class="nav-link {{ 'active bg-gradient' if page_title == 'Services' }}" href="{{url_for('admin.service_manager')}}">
+  <i class="bi bi-cast"></i><span class="ms-2 link-title">Service Manager</span>
+</a>
+<a class="nav-link {{ 'active bg-gradient' if page_title == 'Watchlist' }}" href="{{url_for('admin.watchlist_manager')}}">
+  <i class="bi bi-bookmark-star"></i><span class="ms-2 link-title">Watchlist Manager</span>
+</a>
+<a class="nav-link {{ 'active bg-gradient' if page_title == 'Users' }}" href="{{url_for('admin.user_manager')}}">
+  <i class="bi bi-people"></i><span class="ms-2 link-title">User Manager</span>
+</a>

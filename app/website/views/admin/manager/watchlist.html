@@ -1,0 +1,53 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Watchlist" %}
+
+{% block page_style %}{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <h3 class="mb-0">Watchlist Manager - Edit</h3>
+  <hr class="mb-3" />
+
+  <form method="post" class="d-flex flex-column gap-3">
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="type" class="form-label">Type:</label>
+      <select name="type" id="type" class="form-select" required>
+        <option {{'selected' if watchlist.type=="Movie" }}>Movie</option>
+        <option {{'selected' if watchlist.type=="TV" }}>TV</option>
+      </select>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="title" class="form-label">Title:</label>
+      <input name="title" id="title" value="{{watchlist.title}}" type="text" class="form-control" required>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="year" class="form-label">Year:</label>
+      <input name="year" id="year" value="{{watchlist.year}}" type="number" class="form-control" required>
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="rating" class="form-label">rating:</label>
+      <input name="rating" id="rating" value="{{watchlist.rating}}" type="number" step="0.1" class="form-control">
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <label for="poster" class="form-label">Poster:</label>
+      <input name="poster" id="poster" value="{{watchlist.poster}}" type="text" class="form-control">
+      <img src="{{watchlist.poster}}" class="mt-2">
+    </div>
+
+    <div class="col-lg-4 col-md-8 col-12">
+      <button type="submit" class="btn btn-success">Save changes</button>
+    </div>
+  </form>
+  <hr class="mb-3" />
+  <form action="{{url_for('admin.delete_item',collection='Watchlist',id=watchlist._id)}}">
+    <button type="submit" class="btn btn-danger">Delete item</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

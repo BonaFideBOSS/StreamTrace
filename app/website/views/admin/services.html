@@ -1,0 +1,102 @@
+{% extends 'admin/layout.html' %}
+{% set page_title = "Services" %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{{url_for('static',filename='custom/css/sw.card.css')}}">
+{% endblock %}
+
+{% block page_body %}
+<div class="container my-5">
+  <div class="d-flex gap-3 justify-content-between align-items-center flex-wrap">
+    <h3 class="mb-0">Service Manager</h3>
+    <a href="{{url_for('admin.add_new_service')}}" class="btn btn-purple"><i class="bi bi-plus-lg me-2"></i>Add new
+      service</a>
+  </div>
+  <hr class="mb-3" />
+
+  <form class="d-flex flex-wrap gap-2 align-items-end mb-3 border border-1 p-3 rounded-3">
+    <div>
+      <label for="search" class="form-label">Search:</label>
+      <input name="search" id="search" value="{{search if search else ''}}" type="text" class="form-control"
+        placeholder="Search here...">
+    </div>
+    <button type="submit" class="btn btn-dark"><i class="bi bi-search me-2"></i>Search</button>
+
+    <input value="grid" name="view" id="grid" type="radio" class="btn-check" autocomplete="off" {{'checked' if
+      view=='grid' }}>
+    <label class="btn btn-outline-dark" for="grid" data-bs-toggle="tooltip" data-bs-title="Grid view">
+      <i class="bi bi-grid"></i>
+    </label>
+    <input value="list" name="view" id="list" type="radio" class="btn-check" autocomplete="off" {{'checked' if
+      view=='list' }}>
+    <label class="btn btn-outline-dark" for="list" data-bs-toggle="tooltip" data-bs-title="List view">
+      <i class="bi bi-list-task"></i>
+    </label>
+  </form>
+
+  {% if services|length == 0 %}
+  <div class="alert alert-danger" role="alert">No data found!</div>
+  {% endif %}
+
+  {% if view == "list" %}
+
+  <!-- List View -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+        <tr>
+          <td>
+            <div class="logo-container-sm"><img src="data:image/*;base64,{{ service.logo }}"></div>
+          </td>
+          <td>{{service.name}}</td>
+          <td nowrap>
+            <a href="{{url_for('admin.manage_service',service_id=service._id)}}" class="btn btn-dark">
+              <i class="bi bi-gear me-2"></i>Manage
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <!-- Grid View -->
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-gap-4">
+    {% for service in services %}
+    <div class="col">
+      <div class="sw-card logo-container-lg card text-bg-dark border-0">
+        <img src="data:image/*;base64,{{service.logo_wide}}" class="card-img">
+        <div class="card-img-overlay d-none flex-column justify-content-center">
+          <a href="{{url_for('admin.manage_service',service_id=service._id)}}" class="btn btn-dark stretched-link">
+            <i class="bi bi-gear me-2"></i>Manage
+          </a>
+        </div>
+      </div>
+      <div class="mt-2">
+        <h6>{{service.name}}</h6>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+
+</div>
+{% endblock %}
+
+{% block page_script %}
+<script>
+  $('input[name="view"]').on('change', function () {
+    $('form').submit()
+  })
+</script>
+{% endblock %}

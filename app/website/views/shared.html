@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-bs-theme="{{session.theme if session.theme else 'dark'}}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=7">
+
+  <title>{{page_title}} - {{website_info.name}}</title>
+  <meta name="description" content="{{page_description}}">
+  <link rel="shortcut icon" href="{{url_for('static',filename='img/favico.ico')}}" type="image/x-icon">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='external/bootstrap/bootstrap.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='external/bootstrap/bootstrap-icons.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='custom/css/shared.css')}}">
+
+  {% block main_style %}{% endblock %}
+</head>
+
+<body>
+  {% block main_body %}{% endblock %}
+
+  <div id="notification-toast" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <div id="scroll-to-top"><span><i class="bi bi-arrow-up-circle-fill"></i></span></div>
+
+  <script src="{{url_for('static',filename='external/bootstrap/bootstrap.js')}}"></script>
+  <script src="{{url_for('static',filename='external/js/jquery.js')}}"></script>
+  <script src="{{url_for('static',filename='custom/js/shared.js')}}"></script>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    var message = "{{message}}"
+    notify(message, 10)
+  </script>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block main_script %}{% endblock %}
+</body>
+
+</html>
