@@ -1,5 +1,0 @@
-Flask
-Flask-PyMongo
-beautifulsoup4
-requests
-lxml
