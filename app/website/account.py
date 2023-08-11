@@ -283,12 +283,12 @@ def del_from_watchlist():
 
 
 # Function to update personal details
-@account.route("/update-personal")
+@account.route("/update-personal", methods=["POST"])
 def update_personal_details():
     response = ""
     form_fields = {"username", "first_name", "last_name", "phone", "age"}
     try:
-        data = request.args.to_dict()
+        data = request.form.to_dict()
         valid = True
 
         # Check if all fields exist in the form data
@@ -316,11 +316,11 @@ def update_personal_details():
 
 
 # Function to update email
-@account.route("/update-email")
+@account.route("/update-email", methods=["POST"])
 def update_email():
     response = ""
     try:
-        email = request.args.get("email")
+        email = request.form.get("email")
         if email == session["user"]["email"]:
             return "No changes were made."
 
@@ -337,12 +337,12 @@ def update_email():
 
 
 # Function to update password
-@account.route("/update-password")
+@account.route("/update-password", methods=["POST"])
 def update_password():
     response = ""
     try:
-        old_password = request.args.get("old")
-        new_password = request.args.get("new")
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
         old_password = encrypt_message(old_password)
 
         valid = True

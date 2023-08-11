@@ -8,8 +8,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=7">
 
   <title>{{page_title}} - {{website_info.name}}</title>
-  <meta name="description" content="{{page_description}}">
+  <meta name="description" content="Track all your streaming services and subscriptions from one place">
   <link rel="shortcut icon" href="{{url_for('static',filename='img/favico.ico')}}" type="image/x-icon">
+
+  <meta property="og:site_name" content="streamtrace.almir.info">
+  <meta property="og:title" content="Stream Trace">
+  <meta property="og:type" content="web" />
+  <meta property="og:description" content="Track all your streaming services and subscriptions from one place">
+  <meta property="og:image" content="https://streamtrace.almir.info{{url_for('static',filename='img/streamers.png')}}">
+  <meta property="og:url" content="https://streamtrace.almir.info/">
 
   <link rel="stylesheet" href="{{url_for('static',filename='external/bootstrap/bootstrap.css')}}">
   <link rel="stylesheet" href="{{url_for('static',filename='external/bootstrap/bootstrap-icons.css')}}">
