@@ -122,18 +122,32 @@
       <span class="me-2">{{website_info.logo|safe}}</span><strong>{{website_info.name}}</strong>
     </div>
 
-    <div class="row row-cols-1 row-cols-lg-2 row-gap-5">
+    <div class="row row-gap-5">
 
-      <div class="col">
+      <div class="col-6 col-lg-3">
         <p class="fs-5 fw-bold">Pages</p>
         <ul class="nav flex-column gap-2">
           <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item"><a href="{{url_for('views.services')}}" class="nav-link p-0 text-muted">Streaming
+              Services</a></li>
+          <li class="nav-item"><a href="{{url_for('views.browse')}}" class="nav-link p-0 text-muted">Browse</a></li>
           <li class="nav-item"><a href="{{url_for('views.about')}}" class="nav-link p-0 text-muted">About</a></li>
           <li class="nav-item"><a href="{{url_for('views.contact')}}" class="nav-link p-0 text-muted">Contact</a></li>
         </ul>
       </div>
 
-      <div class="col">
+      <div class="col-6 col-lg-3">
+        <p class="fs-5 fw-bold">Your Account</p>
+        <ul class="nav flex-column gap-2">
+          <li class="nav-item"><a href="{{url_for('account.dashboard')}}" class="nav-link p-0 text-muted">Dashboard</a>
+          </li>
+          <li class="nav-item"><a href="{{url_for('account.watchlist')}}" class="nav-link p-0 text-muted">Watchlist</a>
+          </li>
+          <li class="nav-item"><a href="{{url_for('account.home')}}" class="nav-link p-0 text-muted">Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-lg-6">
         <p class="fs-4 mb-0 fw-bold">Subscribe to our newsletter</p>
         <p class="text-secondary">Sign up for our newsletter to get latest updates on streaming services.</p>
         <form action="{{url_for('views.subscribe')}}" class="d-flex flex-column flex-sm-row needs-validation"
