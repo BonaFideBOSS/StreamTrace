@@ -313,6 +313,10 @@ textarea:focus {
   right: 3%;
 }
 
+.inbox-item:hover.text-secondary {
+  color: unset !important;
+}
+
 .inbox-item:hover .inbox-overlay {
   display: unset;
 }
