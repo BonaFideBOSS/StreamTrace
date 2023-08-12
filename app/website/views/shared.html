@@ -28,6 +28,21 @@
 <body>
   {% block main_body %}{% endblock %}
 
+  {% if session.user %}
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-medium">Reminders</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="text-secondary d-flex flex-column h-100 justify-content-center align-items-center">
+        <i class="bi bi-inbox fs-3"></i>
+        <p class="fw-medium">Nothing in your inbox</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
   <div id="notification-toast" class="toast-container position-fixed top-0 end-0 p-3"></div>
 
   <div id="scroll-to-top"><span><i class="bi bi-arrow-up-circle-fill"></i></span></div>
@@ -35,6 +50,7 @@
   <script src="{{url_for('static',filename='external/bootstrap/bootstrap.js')}}"></script>
   <script src="{{url_for('static',filename='external/js/jquery.js')}}"></script>
   <script src="{{url_for('static',filename='custom/js/shared.js')}}"></script>
+  <script src="{{url_for('static',filename='custom/js/notifications.js')}}"></script>
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}

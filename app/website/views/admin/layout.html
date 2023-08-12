@@ -47,9 +47,14 @@
   </div>
   <div class="offcanvas-body d-flex flex-column">
 
-    <div class="ms-2">
-      <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
-      <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+    <div class="ms-2 d-flex gap-1 align-items-center">
+      <div class="text-truncate">
+        <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
+        <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+      </div>
+      <div class="ms-auto fs-1">
+        {% include 'components/notification-btn.html' %}
+      </div>
     </div>
     <hr class="mb-2">
 

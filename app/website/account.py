@@ -61,9 +61,14 @@ def home():
 def user_subs():
     subs = []
     try:
+        archived = request.args.get("archived", default=True)
+        archived = False if archived == "false" else True
         user_id = session["user"]["_id"]
+        filter = {"user": ObjectId(user_id)}
+        if not archived:
+            filter["archived"] = {"$ne": True}
         pipeline = [
-            {"$match": {"user": ObjectId(user_id)}},
+            {"$match": filter},
             {
                 "$lookup": {
                     "from": "Services",
@@ -72,6 +77,7 @@ def user_subs():
                     "as": "service",
                 }
             },
+            {"$sort": {"expiry": 1}},
         ]
         subs = list(db.Subscriptions.aggregate(pipeline))
         subs = json_util.dumps(subs)
@@ -384,3 +390,23 @@ def delete_account():
     except:
         flash("Failed to delete your account.")
     return redirect({"account.home"})
+
+
+# Function to archive expired subscriptions
+@account.route("/archive-sub", methods=["POST"])
+def archive_sub():
+    response = "Failed to archive."
+    success = False
+    try:
+        sub_id = request.form.get("sub_id")
+        print(sub_id)
+        sub_id = ObjectId(sub_id)
+        user_id = session["user"]["_id"]
+        user_id = ObjectId(user_id)
+        query = {"_id": sub_id, "user": user_id}
+        db.Subscriptions.update_one(query, {"$set": {"archived": True}})
+        response = "Successfully archived subscription."
+        success = True
+    except:
+        response = f"{response} Please try again later."
+    return {"response": response, "success": success}

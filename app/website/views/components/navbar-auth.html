@@ -2,6 +2,7 @@
 <a class="nav-link {{ 'active' if page_title == 'Watchlist' }}" href="{{url_for('account.watchlist')}}">
   <i class="bi bi-bookmark-star"></i>
 </a>
+{% include 'components/notification-btn.html' %}
 <div class="dropdown">
   <button class="nav-link text-truncate" type="button" data-bs-toggle="dropdown">
     {{session.user.username}}

@@ -27,12 +27,10 @@
         {% endif %}
         <a class="nav-link {{ 'active' if page_title == 'Streaming Services' }}"
           href="{{url_for('views.services')}}">Streaming Services</a>
-          <a class="nav-link {{ 'active' if page_title == 'Browse' }}"
-          href="{{url_for('views.browse')}}">Browse</a>
+        <a class="nav-link {{ 'active' if page_title == 'Browse' }}" href="{{url_for('views.browse')}}">Browse</a>
         <a class="nav-link {{ 'active' if page_title == 'About' }}" href="{{url_for('views.about')}}">About</a>
         <a class="nav-link {{ 'active' if page_title == 'Contact' }}" href="{{url_for('views.contact')}}">Contact</a>
       </div>
-
 
       <div class="ms-auto nav nav-pills gap-1 align-items-center {{'fs-5' if session.user}}">
         {% include 'components/theme-changer.html' %}
@@ -59,9 +57,14 @@
   <div class="offcanvas-body d-flex flex-column">
 
     {% if session.user %}
-    <div class="ms-2">
-      <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
-      <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+    <div class="ms-2 d-flex gap-1 align-items-center">
+      <div class="text-truncate">
+        <p class="fs-3 mb-0 text-truncate fw-medium">{{session.user.username}}</p>
+        <p class="small mb-0 text-truncate text-secondary">{{session.user.email}}</p>
+      </div>
+      <div class="ms-auto fs-1">
+        {% include 'components/notification-btn.html' %}
+      </div>
     </div>
     <hr class="mb-2">
     {% endif %}
