@@ -6,8 +6,8 @@ $('#delete-sub').on('click', async function () {
 })
 
 async function send_request(btn, url) {
-  $.get(url)
-    .done(function (response) {
+  await $.get(url)
+    .done(async function (response) {
       if (response.success) {
         history.back()
       } else {

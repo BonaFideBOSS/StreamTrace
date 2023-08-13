@@ -90,8 +90,7 @@ def login():
                 flash("Successfully logged in.")
                 return redirect(url_for("account.dashboard"))
 
-        except Exception as e:
-            print(e)
+        except:
             flash("Something went wrong. Please try again later.")
             pass
 

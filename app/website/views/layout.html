@@ -9,7 +9,7 @@
 {% block main_body %}
 
 <!-- Navigation Menu -->
-<nav class="navbar navbar-expand-lg border-bottom pattern-bg">
+<nav class="navbar navbar-expand-xl border-bottom pattern-bg">
   <div class="container-fluid">
 
     <a class="navbar-brand fs-2 me-0 text-purple-gradient"
@@ -25,7 +25,7 @@
         {% else %}
         <a class="nav-link {{ 'active' if page_title == 'Home' }}" href="{{url_for('views.home')}}">Home</a>
         {% endif %}
-        <a class="nav-link {{ 'active' if page_title == 'Streaming Services' }}"
+        <a class="nav-link text-truncate {{ 'active' if page_title == 'Streaming Services' }}"
           href="{{url_for('views.services')}}">Streaming Services</a>
         <a class="nav-link {{ 'active' if page_title == 'Browse' }}" href="{{url_for('views.browse')}}">Browse</a>
         <a class="nav-link {{ 'active' if page_title == 'About' }}" href="{{url_for('views.about')}}">About</a>
@@ -125,7 +125,7 @@
     <div class="row row-gap-5">
 
       <div class="col-6 col-lg-3">
-        <p class="fs-5 fw-bold">Pages</p>
+        <p class="fs-5 fw-bold">Explore</p>
         <ul class="nav flex-column gap-2">
           <li class="nav-item"><a href="{{url_for('views.home')}}" class="nav-link p-0 text-muted">Home</a></li>
           <li class="nav-item"><a href="{{url_for('views.services')}}" class="nav-link p-0 text-muted">Streaming

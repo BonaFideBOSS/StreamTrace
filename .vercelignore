@@ -1,5 +1,8 @@
 venv
+diagrams
+.git
 .gitignore
+README.md
 Report.docx
 Report.pdf
 start_app.bat
