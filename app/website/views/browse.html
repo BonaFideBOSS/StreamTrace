@@ -59,6 +59,7 @@
   <!-- X -- Pagination Top -- X -->
 
   <!-- Watchlist -->
+  {% if watchlist %}
   <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 row-gap-4">
     {% for title in watchlist %}
     <div class="col">
@@ -83,6 +84,9 @@
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <div class="alert alert-danger" role="alert">No match found!</div>
+  {% endif %}
   <!-- X -- Watchlist -- X -->
 
   <!-- Pagination Bottom -->
