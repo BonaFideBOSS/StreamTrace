@@ -95,3 +95,7 @@ def theme_changer():
 def subscribe():
     flash("Thank you for subscribing!")
     return redirect(request.referrer)
+
+@views.route("/ping/")
+def ping():
+    return "live"
